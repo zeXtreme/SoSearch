@@ -3,6 +3,33 @@
 Follow these steps to build and run the `SoSearch` API layer locally.
 This project has been set up with a China-based rust mirror (`rsproxy` inside `.cargo/config.toml`) to ensure fast and reliable builds.
 
+## 0. Download Pre-built Binaries (Recommended)
+
+Pre-built binaries for all major platforms are available on [GitHub Releases](https://github.com/netlops/SoSearch/releases).
+
+| Platform | Architecture | File |
+|---|---|---|
+| Linux | x86_64 | `SoSearch-linux-amd64.tar.gz` |
+| Linux | aarch64 | `SoSearch-linux-arm64.tar.gz` |
+| macOS | Intel | `SoSearch-macos-amd64.tar.gz` |
+| macOS | Apple Silicon | `SoSearch-macos-arm64.tar.gz` |
+| Windows | x86_64 | `SoSearch-windows-amd64.zip` |
+| Windows | aarch64 | `SoSearch-windows-arm64.zip` |
+
+**Quick install (Linux/macOS):**
+
+```bash
+# Example: download latest for Linux amd64
+curl -LO https://github.com/netlops/SoSearch/releases/latest/download/SoSearch-linux-amd64.tar.gz
+tar xzf SoSearch-linux-amd64.tar.gz
+chmod +x SoSearch
+./SoSearch
+```
+
+**Windows:**
+
+Download the `.zip` from Releases, extract, then run `SoSearch.exe`.
+
 ## 1. Prerequisites
 - [Rust & Cargo](https://rustup.rs/) configured on your environment.
 - Port `10080` available locally (or set a custom `PORT` env var).
@@ -92,3 +119,39 @@ make clean              # cargo clean
 ```
 
 > **Note**: For heavy scraping requirements against Google and Yandex, consider proxy usage or running a Headless browser backend. The `rquest` crate's TLS impersonation takes you quite far but can still be flagged after bulk usage from datacenter IPs.
+
+## 7. CI/CD Auto Release
+
+This project uses GitHub Actions to automatically build multi-platform binaries and publish GitHub Releases.
+
+### How to Publish a Release
+
+```bash
+# 1. Tag a version
+git tag v0.1.0
+
+# 2. Push the tag — CI/CD kicks off automatically
+git push origin v0.1.0
+```
+
+This triggers the workflow at `.github/workflows/release.yml`, which:
+
+1. **Builds 6 targets in parallel** (Linux/macOS/Windows × amd64/arm64)
+2. **Packages** binaries into `.tar.gz` (Unix) or `.zip` (Windows)
+3. **Creates a GitHub Release** with auto-generated release notes and all binaries attached
+
+### Supported Targets
+
+| Target | Runner | Build Method |
+|---|---|---|
+| `x86_64-unknown-linux-gnu` | Ubuntu | Native |
+| `aarch64-unknown-linux-gnu` | Ubuntu | `cross` (Docker) |
+| `x86_64-apple-darwin` | macOS 13 (Intel) | Native |
+| `aarch64-apple-darwin` | macOS latest (M1) | Native |
+| `x86_64-pc-windows-msvc` | Windows | Native |
+| `aarch64-pc-windows-msvc` | Windows | Cross-compile |
+
+### Pre-release Tags
+
+Tags containing `alpha` or `beta` (e.g., `v0.2.0-beta`) are automatically marked as pre-release.
+

@@ -77,3 +77,11 @@ gemini
 ## 🚀 Quick Start
 
 Refer to `QUICK_START.md` for running instructions.
+
+## 📄 License
+
+[CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) — 非商业用途可自由使用、修改和分发。
+
+## 🏠 Community
+
+首发于 [LINUX DO 社区](https://linux.do)，欢迎 Star ⭐ 和 PR！

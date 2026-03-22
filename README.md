@@ -34,6 +34,19 @@ src/
     ├── duckduckgo.rs     # DuckDuckGo scraper
     ├── yahoo.rs          # Yahoo scraper (Bing-powered)
     └── brave.rs          # Brave Search scraper
+examples/
+├── fetch_html.rs        # Download raw HTML for offline debugging
+└── test_parser.rs       # Offline CSS selector iteration
+.gemini/                 # Gemini CLI agent config
+├── GEMINI.md            # Project-level system prompt
+├── settings.json        # MCP server configuration
+└── skills/              # Project-level agent skills
+    ├── sosearch-engine-dev/  # Scraper development workflow
+    └── sosearch-api-ops/     # API operations & deployment
+.agents/                 # Generic agent config (compatible with multiple AI tools)
+└── skills/              # Same skills, alternative discovery path
+    ├── sosearch-engine-dev/
+    └── sosearch-api-ops/
 ```
 
 ## 🤖 Agent Skills & MCP Support
